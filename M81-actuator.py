@@ -34,7 +34,8 @@ try:
     filename = "M81-actuator_" + now.strftime("%Y%m%d") + hourstr + ".csv"
     #filepath = os.path.join('M81-actuator-records', filename)
     
-    print("測定は**モードを使用して位置と速度を決定してください")
+    print("測定は 数値指定移動モード を使用して位置と速度を決定してください")
+    print("入力は半角")
     start_point = float(input("開始地点を入力してください[mm]:"))
     end_point = float(input("終了地点を入力してください[mm]:"))
     speed = float(input("移動速度を入力してください[mm/s]:"))
@@ -53,9 +54,9 @@ try:
         writer = csv.writer(f)
         writer.writerow(["測定地点[mm]","R[V]","theta[Θ]"]) #最初の一行に説明を書き込む
         
+        input("エンターを押してスタート")
         start_time = time.time()
         next_measurement_time = start_time
-        
         for i in range(number_of_measurements):
             current_time = time.time()
             while current_time < next_measurement_time:
@@ -95,4 +96,3 @@ except Exception as e:
 
 finally:
     S1.disable()
-    f.close()
