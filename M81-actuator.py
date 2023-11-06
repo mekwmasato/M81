@@ -13,7 +13,7 @@ S1 = M81.get_source_module(1) #ソースモジュール
 M1 = M81.get_measure_module(1) #計測モジュール
 
 S1.set_shape('SINUSOID') #sin波のこと
-S1.set_frequency(10000) #周波数[Hz]
+#S1.set_frequency(10000) #周波数[Hz]
 S1.set_current_amplitude(0.01) #電流[A]
 S1.set_current_offset(0)
 S1.configure_i_range(0, max_ac_level=0.1) #Range設定(autoを使うか、max_level,max_ac_level,max_dc_level)どれか一つ指定
@@ -40,6 +40,8 @@ try:
     end_point = float(input("終了地点を入力してください[mm]:"))
     speed = float(input("移動速度を入力してください[mm/s]:"))
     measure_interval_distance = float(input("測定したい間隔[mm]を入力してください:"))
+    frequency = float(input("励磁周波数を入力:"))
+    S1.set_frequency(frequency) #周波数[Hz]
     
     total_distance = end_point - start_point
     time_per_interval = measure_interval_distance / speed #各測定間隔の時間
@@ -52,7 +54,7 @@ try:
     
     with open(os.path.join("M81-actuator-records",filename), 'w', newline='') as f: #create CSV file
         writer = csv.writer(f)
-        writer.writerow(["測定地点[mm]","R[V]","theta[Θ]"]) #最初の一行に説明を書き込む
+        writer.writerow(["測定地点[mm]","R[V]","theta[Θ]",f"frequency:{frequency}"]) #最初の一行に説明を書き込む
         
         input("エンターを押してスタート")
         start_time = time.time()
